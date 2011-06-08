@@ -16,7 +16,7 @@ URL:		http://sendpatch.se/projects/pylibmc/
 # remove BR: python-devel for 'noarch' packages.
 BuildRequires:	python-devel
 BuildRequires:	python-distribute
-BuildRequires:	libmc-devel
+BuildRequires:	libmemcached-devel
 BuildRequires:	rpm-pythonprov
 # if py_postclean is used
 BuildRequires:	rpmbuild(macros) >= 1.219
@@ -33,13 +33,14 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %setup -q -n %{module}-%{version}
 
 # fix #!/usr/bin/env python -> #!/usr/bin/python:
-%{__sed} -i -e '1s,^#!.*python,#!%{__python},' %{name}.py
+%{__sed} -i -e '1s,^#!.*python,#!%{__python},' %{module}.py
 
 %build
 # CC/CFLAGS is only for arch packages - remove on noarch packages
 CC="%{__cc}" \
 CFLAGS="%{rpmcflags}" \
-%{__python} setup.py build
+%{__python} setup.py build \
+	--with-zlib
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -47,9 +48,6 @@ rm -rf $RPM_BUILD_ROOT
 	--skip-build \
 	--optimize=2 \
 	--root=$RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
-cp -a examples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 # change %{py_sitedir} to %{py_sitescriptdir} for 'noarch' packages!
 %py_ocomp $RPM_BUILD_ROOT%{py_sitedir}
@@ -61,11 +59,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS CREDITS ChangeLog NEWS README THANKS TODO
+%doc PKG-INFO README*
 # change %{py_sitedir} to %{py_sitescriptdir} for 'noarch' packages!
 %{py_sitedir}/*.py[co]
 %attr(755,root,root) %{py_sitedir}/*.so
 %if "%{py_ver}" > "2.4"
-%{py_sitedir}/TEMPLATE-*.egg-info
+%{py_sitedir}/*.egg-info
 %endif
-%{_examplesdir}/%{name}-%{version}
+##%{_examplesdir}/%{name}-%{version}
