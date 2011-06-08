@@ -26,8 +26,10 @@ Requires:		python-modules
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
+pylibmc is a quick and small Python clien for memcached written in C.
 
 %description -l pl.UTF-8
+pylibmc jest szybkim i małym klientem Pythona dla biblioteki memcached napisanym w C.
 
 %prep
 %setup -q -n %{module}-%{version}
@@ -66,4 +68,3 @@ rm -rf $RPM_BUILD_ROOT
 %if "%{py_ver}" > "2.4"
 %{py_sitedir}/*.egg-info
 %endif
-##%{_examplesdir}/%{name}-%{version}
