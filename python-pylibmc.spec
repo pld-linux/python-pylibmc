@@ -2,12 +2,12 @@
 Summary:	Quick and small memcached cliend for Python
 Summary(pl.UTF-8):	Mały i szybki klient memcsche dla Pythona
 Name:		python-%{module}
-Version:	1.2.0
+Version:	1.2.2
 Release:	0.1
 License:	BSD
 Group:		Development/Languages/Python
 Source0:	http://pypi.python.org/packages/source/p/%{module}/%{module}-%{version}.tar.gz
-# Source0-md5:	b188af48211e087585ac9beaf91cf379
+# Source0-md5:	94ea743e50103fcb7792e11ca62291b0
 URL:		http://sendpatch.se/projects/pylibmc/
 BuildRequires:	libmemcached-devel
 BuildRequires:	python-devel
